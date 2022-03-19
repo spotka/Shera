@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>FakeNews</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+  <script>
+  $( function() {
+    var tabs = $( "#tabs" ).tabs();
+    var previouslyFocused = false;
+ 
+    tabs.find( ".ui-tabs-nav" ).sortable({
+      axis: "x",
+ 
+      // Sortable removes focus, so we need to restore it if the tab was focused
+      // prior to sorting
+      start: function(event, ui) {
+        previouslyFocused = document.activeElement === ui.item[ 0 ];
+      },
+      stop: function(event, ui) {
+        tabs.tabs( "refresh" );
+        if (previouslyFocused) {
+          ui.item.trigger( "focus" );
+        }
+      }
+    });
+  } );
+  </script>
+  <script>
+  $( function() {
+    var tabs = $( "#tabs2" ).tabs();
+    var previouslyFocused = false;
+ 
+    tabs.find( ".ui-tabs-nav" ).sortable({
+      axis: "x",
+ 
+      // Sortable removes focus, so we need to restore it if the tab was focused
+      // prior to sorting
+      start: function(event, ui) {
+        previouslyFocused = document.activeElement === ui.item[ 0 ];
+      },
+      stop: function(event, ui) {
+        tabs.tabs( "refresh" );
+        if (previouslyFocused) {
+          ui.item.trigger( "focus" );
+        }
+      }
+    });
+  } );
+  </script>
+</head>
+
+<body class="homepage is-preload">
+
+    <div id="page-wrapper">
+        <section id="header" class="wrapper">
+        <!-- Header -->
+      
+            <!-- Logo -->
+            <div id="logo">
+
+                <h1><a href="index.html">DatenAnalyse</a></h1>
+                <p> Eine kompakte und detailierte Darstellung in Statistiken über Fake News
+                    <br> in verschiedenen Zeitungen von den Metadata aus Twitter</p>
+
+            </div>
+    </div>
+
+    <!-- Nav -->
+    <nav id="nav">
+        <ul>
+            <li class="current"><a href="index.html">Startseite</a></li>
+            <li><a href="information.html">Informationen</a></li>
+            <li><a href="dataanalysis.html">Data Analysis</a></li>
+            <li><a href="about.html">Über Uns</a></li>
+        </ul>
+    </nav>
+    </section>
+
+    <section id="intro" class="wrapper style1">
+        <div class="title">Einleitung</div>
+        <div class="container">
+            <p class="style2">
+                Social-Media Datenanalyse
+
+            </p>
+            <p class="style1">Im Rahmen des Seminars "Digital Humanities und Informatik der Geisteswissenschaften" haben
+                sich Nina Eckertz, Shera Potka, Kamil Schock mit der Daten Analyse von verschiedenen Zeitungen in den
+                Social Media Plattformen Twitter und Instagram auseinander gesetzt. Dabei war der Fokus auf "Fake News".
+                Fake News in diesem Context heißt, dass Metadaten diverse Filter durchlaufen müssen und bestimmte Punkte
+                um zu detailierten Ergebnisse führen. Die Ergebnisse werden visualisiert und in Statistiken festgehalten
+            </p>
+
+            <ul class="actions">
+                <li><a href="#" class="button style3 large">Daten Analyse</a></li>
+            </ul>
+        </div>
+    </section>
+
+  <div id="tabs">
+  <ul>
+    <li><a href="#tab1">1 Multiclass classification</a></li>
+    <li><a href="#tab2">2 Preprocessing der Daten</a></li>
+    <li><a href="#tab3">3 Wahl des Machine Learning Algorithmus</a></li>
+	 <li><a href="#tab4">4 Multinominale logistische Regression</a></li>
+    <li><a href="#tab5">5 Preprocessing II und das Endmodel</a></li>
+    <li><a href="#tab6">6 Das Model Im Einsatz – Model Deployment</a></li>
+  </ul>
+<div id="tab1">
+    <p>Multiclass Classification wurde in unserem Projekt verwendet, um die Tweets von 8
+Twitter-Accounts unterschiedlicher Zeitungen zuordnen zu können. Hierbei wurden auch die
+unterschiedlichen Nuancen der Schreibstile der jeweiligen Accounts maschinell untersucht. </p>
+  </div>
+  <div id="tab2">
+  <img src="images/info/graf1.jpg" alt="graf1"/>
+  <p>Bei der Vorverarbeitung oder auch dem Preprocessing der Daten wurde die größtmögliche gemeinsame Schnittmenge, also 160 Tweets, welche gleichzeitig die Gesamtmenge an Tweets des Datensatzes von “Glasauge” ist, gewählt. Es wurde so vorgegangen, um einen ausbalancierten Datensatz zu gewährleisten. So wurden von jeder im Vorfeld gescrapten JSON-Datei der 8 Größten Zeitschriften die 160 ersten Objekte entnommen und zusammen in eine CSV-Datei geschrieben.</p>
+     <img src="images/info/kamil2.jpg"/>
+  </div>
+  
+  <div id="tab3">
+	<img src="images/info/graphWahlDesMachine.jpg" alt="graph WahlDes Machine"/>
+	<p>Es gibt unterschiedliche Machine Learning Algorithmen, um diese Klassifizierung
+durchzuführen, dazu gehören unter anderem:
+
+		<ul>
+			<li>Linear Support Vector Machine (SVM)</li>
+			<li>Multinomial Naive Bayes</li>
+			<li>Logistic Regression</li>
+			<li>Random Forest</li>
+			</ul>
+		Um herauszufinden, welches Algorithmus am besten dafür geeignet ist, wurde ein Test mit vorverarbeiteten Daten durchgeführt. Die Ergebnisse einer 10-fachen Kruzvalidierung, haben gezeigt, dass logistische Regression die besten Ergebnisse erzeugt.
+	</p>
+  </div>
+    <div id="tab4">
+	  <img src="images/info/graf3.jpg" alt="graf3"/>
+		<p>Nach der Auswahl des Algorithmus wird dieser nochmals auf die vorverarbeiteten Daten
+angewendet. Die Datensätze wurden im Verhältnis 80 % zu 20 % in Training- und
+Testdatensätze aufgeteilt und erneut der logistischen Regression unterzogen.
+Die Evaluationstabelle zeigt, welche Ergebnisse der Lernalgorithmus, gemessen in
+Precision, Recall und Accuracy in Bezug auf die einzelnen Klassen erreicht hat:
+		</p>
+		<img src="images/info/multinomale.jpg" alt="multinominale"/>
+		<img src="images/info/graf2.jpg" alt="graf2"/>
+		<img src="images/info/multinomalev2.jpg" alt="multinominale 2"/>
+
+  </div>
+  <div id="tab5">
+  		<img src="images/info/preproccessing.jpg" alt="preproccessing"/>
+		<img src="images/info/preproccessingv2.jpg" alt="preproccessingv2 2"/>
+  </div>
+  <div id="tab6">
+   <section>
+    <div class="container" style="">
+        <p></p><h2 style="">Wer hat den Tweet geschrieben?</h2><p></p>
+   
+        <h3 style=""> Das Model im Einsatz Model Deployment
+Besuchen Sie unsere Vorhersagen-Applikation 
+Sehen Sie das trainierte Model im Einsatz.
+          <br> 
+         <a href="https://hauptseminardh.herokuapp.com/" target="_blank"> https://hauptseminardh.herokuapp.com/</a>
+    </div>  
+	</div>
+   
+  	</section>
+</div>
+  </div>
+
+  <div id="tabs2">
+  <ul>
+    <li><a href="#tabs-1">Subjektivität Analyse </a></li>
+    <li><a href="#tabs-2">Frequenz-Analyse </a></li>
+    
+    <li><a href="#tabs-4">Top 3 </a></li>
+    <li><a href="#tabs-5"> Polarität Analyse </a></li>
+    
+  </ul>
+  <div id="tabs-1">
+ <img src="images/info/tabstotal/tabtotal.jpg" alt="tab1"/>
+  <p>
+    Diese Analyse zeigt auf, dass die Mehrheit der Posts als neutral bzw. objektiv bewertet wurde. Dies ist vor allem deshalb ein interessantes Ergebnis, da man in einer weiteren Untersuchung herausstellen kann, warum die Posts so bewertet werden wie sie bewertet werden und ob das vorliegende Modell in der Lage ist, Ironie, Sarkasmus und allgemein übertriebene Formulierungen zu erkennen. Dies scheint mir hier nicht der Fall zu sein. 	
+  </p> 
+</div>
+  <div id="tabs-2">
+ <img src="images/info/tabstotal/tabtotal1.jpg" alt="tab2"/>
+  <p>Anhand des Ergebnisses in Fig. 5 kann man sehen, dass die Satire-Zeitungen weitaus weniger Posten als die Tageszeitungen. Die könnte bspw. implizieren, dass die Satirezeitungen kleinere Redaktionen haben und dadurch weniger Inhalte produzieren können oder aber länger brauchen, um ein lustige Satiremeldung zu schreiben, bzw. warten bis sich ein Fall ergibt, der einer Parodie würdig ist. </p>  
+</div>
+ 
+  <div id="tabs-4">
+ <img src="images/info/tabstotal/tabtotal3.jpg" alt="tab2"/>
+  <p>
+    Wie man an Fig. 1 sieht, enthalten die Top 3 häufig den Namen der postenden Zeitung. Filtert man Links nicht heraus, ist https ebenfalls einer der höchst-frequentierten Wörter. Auch Fig. 2 zeigt nur wenige inhaltsbezogene Wörter an wie etwa Merkel oder Laschet, dafür ist auch hier wieder das Wort Abo vertreten. Dies impliziert, dass die Tweets sehr häufig auf das eigene Angebot der Zeitung und externe Seiten zu verlinken. Dies wird auch noch mal durch das outlinks-Feld innerhalb der Metadaten gestützt, welches aufzeigt wie viele Verlinkungen es nach Außen gibt
+  </p>  
+</div>
+  <div id="tabs-5">
+ <img src="images/info/tabstotal/tabtotal4.jpg" alt="tab2"/>
+  <p>
+    Diese Analyse zeigt auf, dass die Mehrheit der Posts als neutral bzw. objektiv bewertet wurde . Dies ist vor allem deshalb ein interessantes Ergebnis, da man in einer weiteren Untersuchung herausstellen kann, warum die Posts so bewertet werden wie sie bewertet werden und ob das vorliegende Modell in der Lage ist, Ironie, Sarkasmus und allgemein übertriebene Formulierungen zu erkennen. Dies scheint mir hier nicht der Fall zu sein. 	 
+  </p>  </div>
+</div>
+  	<section id="footer" class="wrapper">
+		<div class="title">Kontakt</div>
+		<div class="container">
+			<header class="style1">
+				<h2>Fragen oder Anmerkungen ?</h2>
+				<p>
+					Gerne können Sie sich bei Fragen an uns wenden.<br />
+					Dafür nutzen Sie bitte die Kontakt-Form
+				</p>
+			</header>
+			<div class="row">
+				<div class="col-6 col-12-medium">
+
+					<!-- Contact Form -->
+					<section>
+						<form method="post" action="#">
+							<div class="row gtr-50">
+								<div class="col-6 col-12-small">
+									<input type="text" name="name" id="contact-name" placeholder="Name" />
+								</div>
+								<div class="col-6 col-12-small">
+									<input type="text" name="email" id="contact-email" placeholder="Email" />
+								</div>
+								<div class="col-12">
+									<textarea name="message" id="contact-message" placeholder="Message"
+										rows="4"></textarea>
+								</div>
+								<div class="col-12">
+									<ul class="actions">
+										<li><input type="submit" class="style1" value="Send" /></li>
+										<li><input type="reset" class="style2" value="Reset" /></li>
+									</ul>
+								</div>
+							</div>
+						</form>
+					</section>
+
+				</div>
+				<div class="col-6 col-12-medium">
+
+					<!-- Contact -->
+					<section class="feature-list small">
+						<div class="row">
+							<div class="col-6 col-12-small">
+								<section>
+									<h3 class="icon solid fa-home"></h3>
+									<p>
+										Universität zu Köln<br />
+										
+                     Albertus-Magnus-Platz 
+<br /> 50923 Köln
+									</p>
+								</section>
+							</div>
+							<div class="col-6 col-12-small">
+								<section>
+									<h3 class="icon solid fa-comment">Email</h3>
+									<p>
+										<a href="#">spotka@smail.uni-koeln.de</a><br />
+										<a href="#">neckertz@smail.uni-koeln.de</a><br />
+										<a href="#">kamilschock@yahoo.com</a>
+									</p>
+								</section>
+							</div>
+							<div class="col-6 col-12-small">
+								<section>
+									<h3 class="icon solid fa-envelope">Email</h3>
+									<p>
+										<a href="#">oeide@smail.uni-koeln.de</a>
+									</p>
+								</section>
+							</div>
+							<div class="col-6 col-12-small">
+								<section>
+									<h3 class="icon solid fa-phone">Phone</h3>
+									<p>
+										+(49)1749815205
+									</p>
+								</section>
+							</div>
+						</div>
+					</section>
+
+				</div>
+			</div>
+			<div id="copyright">
+				<ul>
+
+				</ul>
+			</div>
+		</div>
+	</section>
+</body>
+</html>
